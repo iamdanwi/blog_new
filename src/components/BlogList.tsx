@@ -18,6 +18,7 @@ const BlogList = () => (
         const cleanTitle = DOMPurify.sanitize(rawTitle);
 
         return (
+          <>
           <div
             key={index}
             className="flex flex-col md:flex-row-reverse gap-8 items-center"
@@ -57,10 +58,12 @@ const BlogList = () => (
               </div>
             </div>
           </div>
+            <Separator className="my-5 bg-neutral-600" />
+          </>
+          
         );
       })}
     </section>
-    <Separator className="my-5 bg-neutral-600" />
   </>
 );
 

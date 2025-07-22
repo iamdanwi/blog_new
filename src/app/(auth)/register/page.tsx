@@ -4,11 +4,11 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 
 const Register = () => (
-  <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-background to-muted/20">
+  <div className="h-screen flex items-center justify-center font-montserrat ">
     <div className="w-full max-w-md">
       {/* Header */}
       <div className="text-center mb-12">
-        <h1 className="text-3xl font-bold text-foreground mb-3">
+        <h1 className="text-3xl font-dm-serif tracking-wide font-bold text-foreground mb-3">
           Create account
         </h1>
         <p className="text-muted-foreground text-sm">
@@ -17,8 +17,8 @@ const Register = () => (
       </div>
 
       {/* Form Card */}
-      <div>
-        <form className="space-y-6">
+      {/* <div> */}
+        <div className="space-y-6">
           {/* Name Field */}
           <div className="space-y-2">
             <Label
@@ -104,19 +104,19 @@ const Register = () => (
           >
             Create account
           </Button>
-        </form>
+        {/* </div> */}
 
         {/* Divider */}
-        <div className="flex items-center my-6">
+        {/* <div className="flex items-center my-6">
           <div className="flex-1 border-t border-border/40"></div>
           <span className="px-4 text-xs text-muted-foreground bg-card">
             or continue with
           </span>
           <div className="flex-1 border-t border-border/40"></div>
-        </div>
+        </div> */}
 
         {/* Social Login */}
-        <div className="grid grid-cols-2 gap-3">
+        {/* <div className="grid grid-cols-2 gap-3">
           <Button
             variant="outline"
             type="button"
@@ -156,7 +156,7 @@ const Register = () => (
             </svg>
             Facebook
           </Button>
-        </div>
+        </div> */}
 
         {/* Sign In Link */}
         <p className="text-center text-sm text-muted-foreground mt-8">

@@ -6,7 +6,7 @@ export default function RootLayout({
   return (
 
       <main
-        className={`antialiased container mx-auto p-3 space-y-3`}
+        className={`antialiased container mx-auto px-5 font-montserrat`}
       >
         {children}
       </main>
