@@ -176,7 +176,7 @@ const AllPosts = () => {
           <h1 className="text-3xl font-bold">All Posts</h1>
           <Badge variant="secondary">{filteredPosts.length} posts</Badge>
         </div>
-        <Link href="/editor">
+        <Link href="/author/editor">
           <Button className="cursor-pointer">
             <PenTool className="h-4 w-4 mr-2" />
             New Post

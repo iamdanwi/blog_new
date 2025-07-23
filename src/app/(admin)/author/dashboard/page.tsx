@@ -104,7 +104,7 @@ const Dashboard = () => {
             Welcome back! Here&apos;s your blog overview.
           </p>
         </div>
-        <Link href="/editor">
+        <Link href="/author/editor">
           <Button className="cursor-pointer">
             <PenTool className="h-4 w-4 mr-2" />
             Write New Post
