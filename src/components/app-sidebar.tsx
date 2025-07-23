@@ -1,4 +1,4 @@
-import { FilePenLine, Home, LogOut, Settings } from "lucide-react";
+import { FilePenLine, Home, LogOut, Settings, Rss } from "lucide-react";
 
 import {
   Sidebar,
@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/sidebar";
 import Link from "next/link";
 
-// Menu items.
+
 const items = [
   {
     title: "Home",
@@ -21,19 +21,25 @@ const items = [
   },
   {
     title: "Editor",
-    url:"/editor",
-    icon: FilePenLine
+    url: "/editor",
+    icon: FilePenLine,
+  },
+  {
+    title: "All Posts",
+    url: "/all-posts",
+    icon: Rss,
   },
   {
     title: "Settings",
     url: "/settings",
     icon: Settings,
   },
+
   {
     title: "Logout",
     url: "#",
-    icon: LogOut
-  }
+    icon: LogOut,
+  },
 ];
 
 export function AppSidebar() {
