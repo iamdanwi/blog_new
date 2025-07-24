@@ -55,7 +55,7 @@ export default function BlogPost({
               alt="Article cover"
               width={1200}
               height={600}
-              className="h-96 w-full object-cover shadow-lg"
+              className="h-96 w-full object-cover shadow-lg rounded-md"
               priority
             />
           </div>
@@ -90,7 +90,7 @@ export default function BlogPost({
                     width={100}
                     height={60}
                     alt={post.title}
-                    className=" object-cover w-28 h-20"
+                    className=" object-cover w-28 h-20 rounded-md"
                   />
                   <div>
                     <h3

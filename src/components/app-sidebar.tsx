@@ -16,22 +16,22 @@ import Link from "next/link";
 const items = [
   {
     title: "Home",
-    url: "/author/dashboard",
+    url: "/me/dashboard",
     icon: Home,
   },
   {
     title: "Editor",
-    url: "/author/editor",
+    url: "/me/editor",
     icon: FilePenLine,
   },
   {
     title: "All Posts",
-    url: "/author/all-posts",
+    url: "/me/all-posts",
     icon: Rss,
   },
   {
     title: "Settings",
-    url: "/author/settings",
+    url: "/me/settings",
     icon: Settings,
   },
 

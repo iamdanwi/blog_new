@@ -17,8 +17,6 @@ import {
   Users,
   TrendingUp,
   MessageCircle,
-  Share2,
-  Calendar,
   BarChart3,
   ThumbsUp,
 } from "lucide-react";
@@ -85,13 +83,6 @@ const Dashboard = () => {
       engagement: 5.2,
       publishedAt: "2024-01-18",
     },
-  ];
-
-  const socialShares = [
-    { platform: "Twitter", shares: 234, growth: "+12%" },
-    { platform: "LinkedIn", shares: 156, growth: "+8%" },
-    { platform: "Facebook", shares: 89, growth: "+5%" },
-    { platform: "Reddit", shares: 67, growth: "+15%" },
   ];
 
   return (
@@ -260,83 +251,6 @@ const Dashboard = () => {
           </CardContent>
         </Card>
       </div>
-
-      {/* Comment Engagement & Social Shares */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Comment Engagement */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <MessageCircle className="h-5 w-5" />
-              Comment Engagement
-            </CardTitle>
-            <CardDescription>
-              Recent comment activity on your posts
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <span className="text-sm">Total Comments This Month</span>
-                <span className="font-bold">156</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm">Average Comments per Post</span>
-                <span className="font-bold">6.5</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm">Response Rate</span>
-                <span className="font-bold">89%</span>
-              </div>
-              <div className="pt-2">
-                <div className="text-sm text-muted-foreground mb-2">
-                  Comment Trend
-                </div>
-                <Progress value={75} className="h-2" />
-                <p className="text-xs text-muted-foreground mt-1">
-                  +12% increase from last month
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Social Shares */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Share2 className="h-5 w-5" />
-              Social Shares
-            </CardTitle>
-            <CardDescription>How your content is being shared</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {socialShares.map((platform) => (
-                <div
-                  key={platform.platform}
-                  className="flex items-center justify-between"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
-                      <Share2 className="h-4 w-4" />
-                    </div>
-                    <span className="font-medium">{platform.platform}</span>
-                  </div>
-                  <div className="text-right">
-                    <div className="font-bold">{platform.shares}</div>
-                    <div className="text-xs text-green-600">
-                      {platform.growth}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-     
     </div>
   );
 };
