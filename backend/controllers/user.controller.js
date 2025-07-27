@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 
 
 // Signup
-export const signup = async (req, res) => {
+export const register = async (req, res) => {
     const { name, email, password } = req.body;
     try {
         const user = await User.findOne({ email });
@@ -42,7 +42,7 @@ export const login = async (req, res) => {
         res.status(200).json({
             message: "Login successful",
             token,
-            user: {
+            data: {
                 id: user._id,
                 name: user.name,
                 email: user.email,

@@ -24,7 +24,7 @@ import Link from "next/link";
 
 const Dashboard = () => {
   // Mock data - in a real app, this would come from your API
-  const authorStats = {
+  const meStats = {
     totalPosts: 24,
     totalViews: 15420,
     engagementRate: 4.2,
@@ -95,7 +95,7 @@ const Dashboard = () => {
             Welcome back! Here&apos;s your blog overview.
           </p>
         </div>
-        <Link href="/author/editor">
+        <Link href="/me/editor">
           <Button className="cursor-pointer">
             <PenTool className="h-4 w-4 mr-2" />
             Write New Post
@@ -103,7 +103,7 @@ const Dashboard = () => {
         </Link>
       </div>
 
-      {/* Author Statistics */}
+      {/* me Statistics */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -113,7 +113,7 @@ const Dashboard = () => {
             <FileText className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{authorStats.totalPosts}</div>
+            <div className="text-2xl font-bold">{meStats.totalPosts}</div>
             <p className="text-xs text-muted-foreground">+2 from last month</p>
           </CardContent>
         </Card>
@@ -125,7 +125,7 @@ const Dashboard = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {authorStats.totalViews.toLocaleString()}
+              {meStats.totalViews.toLocaleString()}
             </div>
             <p className="text-xs text-muted-foreground">
               +15% from last month
@@ -142,7 +142,7 @@ const Dashboard = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {authorStats.engagementRate}%
+              {meStats.engagementRate}%
             </div>
             <p className="text-xs text-muted-foreground">
               +0.3% from last month
@@ -157,7 +157,7 @@ const Dashboard = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {authorStats.followerCount.toLocaleString()}
+              {meStats.followerCount.toLocaleString()}
             </div>
             <p className="text-xs text-muted-foreground">+47 from last month</p>
           </CardContent>

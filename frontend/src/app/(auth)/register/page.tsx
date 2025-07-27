@@ -1,24 +1,80 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
+import axios from "axios";
+import { useState } from "react";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
-const Register = () => (
-  <div className="h-screen flex items-center justify-center font-montserrat ">
-    <div className="w-full max-w-md">
-      {/* Header */}
-      <div className="text-center mb-12">
-        <h1 className="text-3xl font-dm-serif tracking-wide font-bold text-foreground mb-3">
-          Create account
-        </h1>
-        <p className="text-muted-foreground text-sm">
-          Sign up to get started with your account
-        </p>
-      </div>
 
-      {/* Form Card */}
-      {/* <div> */}
-        <div className="space-y-6">
+const Register = () => {
+  const router = useRouter();
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  function nameHandler(event: React.ChangeEvent<HTMLInputElement>) {
+    setName(event.target.value);
+  }
+
+  function emailHandler(event: React.ChangeEvent<HTMLInputElement>) {
+    setEmail(event.target.value);
+  }
+
+  function passwordHandler(event: React.ChangeEvent<HTMLInputElement>) {
+    setPassword(event.target.value);
+  }
+  const ReqRegister = async () => {
+    try {
+      await axios.post("/api/auth/register", {
+        name: name,
+        email: email,
+        password: password,
+      });
+      setEmail("");
+      setName("");
+      setPassword("");
+      toast.success("Account created successfully please login", {duration: 2000, position: "top-right",style: {backgroundColor: "green", color: "white"}});
+      setTimeout(() => {
+        router.push("/login");
+      }, 2500);
+      router.push("/login");
+    } catch (err: any) {
+      toast.error(err.response.data.message, {
+        position: "top-right",
+        duration: 2000,
+        style: { backgroundColor: "red", color: "white" },
+      });
+      setEmail("");
+      setName("");
+      setPassword("");
+    }
+  };
+
+  return (
+    <div className="h-screen flex items-center justify-center font-montserrat ">
+      <div className="w-full max-w-md">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h1 className="text-3xl font-dm-serif tracking-wide font-bold text-foreground mb-3">
+            Create account
+          </h1>
+          <p className="text-muted-foreground text-sm">
+            Sign up to get started with your account
+          </p>
+        </div>
+
+        {/* Form Card */}
+        {/* <div> */}
+        <form className="space-y-6" onSubmit={(e) => {
+          e.preventDefault();
+          ReqRegister();
+        }}>
+          {/* <div className}>
           {/* Name Field */}
           <div className="space-y-2">
             <Label
@@ -30,6 +86,8 @@ const Register = () => (
             <Input
               id="name"
               type="text"
+              value={name}
+              onChange={nameHandler}
               placeholder="Enter your full name"
               className="h-11 bg-background/50 border-border/60 focus:border-primary/60 focus:ring-primary/20"
             />
@@ -46,6 +104,8 @@ const Register = () => (
             <Input
               id="email"
               type="email"
+              value={email}
+              onChange={emailHandler}
               placeholder="Enter your email"
               className="h-11 bg-background/50 border-border/60 focus:border-primary/60 focus:ring-primary/20"
             />
@@ -62,12 +122,12 @@ const Register = () => (
             <Input
               id="password"
               type="password"
+              value={password}
+              onChange={passwordHandler}
               placeholder="Create a password"
               className="h-11 bg-background/50 border-border/60 focus:border-primary/60 focus:ring-primary/20"
             />
           </div>
-
-         
 
           {/* Terms and Conditions */}
           {/* <div className="flex items-start space-x-2">
@@ -104,10 +164,10 @@ const Register = () => (
           >
             Create account
           </Button>
-        {/* </div> */}
+          {/* </div> */}
 
-        {/* Divider */}
-        {/* <div className="flex items-center my-6">
+          {/* Divider */}
+          {/* <div className="flex items-center my-6">
           <div className="flex-1 border-t border-border/40"></div>
           <span className="px-4 text-xs text-muted-foreground bg-card">
             or continue with
@@ -115,8 +175,8 @@ const Register = () => (
           <div className="flex-1 border-t border-border/40"></div>
         </div> */}
 
-        {/* Social Login */}
-        {/* <div className="grid grid-cols-2 gap-3">
+          {/* Social Login */}
+          {/* <div className="grid grid-cols-2 gap-3">
           <Button
             variant="outline"
             type="button"
@@ -158,19 +218,20 @@ const Register = () => (
           </Button>
         </div> */}
 
-        {/* Sign In Link */}
-        <p className="text-center text-sm text-muted-foreground mt-8">
-          Already have an account?{" "}
-          <Link
-            href="/login"
-            className="text-primary hover:text-primary/80 font-medium"
-          >
-            Sign in
-          </Link>
-        </p>
+          {/* Sign In Link */}
+          <p className="text-center text-sm text-muted-foreground mt-8">
+            Already have an account?{" "}
+            <Link
+              href="/login"
+              className="text-primary hover:text-primary/80 font-medium"
+            >
+              Sign in
+            </Link>
+          </p>
+        </form>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default Register;

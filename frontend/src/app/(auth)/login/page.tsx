@@ -1,66 +1,138 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
+
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
+import axios from "axios";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
-const Login = () => (
-  <div className="h-screen flex items-center justify-center bg-gradient-to-br from-background via-background to-muted/20">
-    <div className="w-full max-w-md">
-      {/* Header */}
-      <div className="text-center mb-12">
-        <h1 className="text-3xl font-bold text-foreground mb-3 font-dm-serif tracking-wide">
-          Welcome back
-        </h1>
-        <p className="text-muted-foreground text-sm">
-          Sign in to continue to your account
-        </p>
-      </div>
+const Login = () => {
+  const router = useRouter();
 
-      {/* Form Card */}
-      <div>
-        <form className="space-y-6">
-          {/* Email Field */}
-          <div className="space-y-2">
-            <Label
-              htmlFor="email"
-              className="text-sm font-medium text-foreground"
-            >
-              Email address
-            </Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="Enter your email"
-              className="h-11 bg-background/50 border-border/60 focus:border-primary/60 focus:ring-primary/20"
-            />
-          </div>
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-          {/* Password Field */}
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
+  function emailHandler(event: React.ChangeEvent<HTMLInputElement>) {
+    setEmail(event.target.value);
+  }
+
+  function passwordHandler(event: React.ChangeEvent<HTMLInputElement>) {
+    setPassword(event.target.value);
+  }
+
+  const ReqLogin = async () => {
+    try {
+      if (!email || !password) {
+        toast.error("Please enter both email and password", {
+          position: "top-right",
+          duration: 2000,
+          style: { backgroundColor: "red", color: "white" },
+        });
+        return;
+      }
+
+      const res = await axios.post("api/auth/login", {
+        email: email,
+        password: password,
+      });
+
+      console.log("Login client response:", res.data);
+
+      if (res.data.message === "Login successful") {
+        router.push("/me/settings");
+        toast.success("Login successful", {
+          position: "top-right",
+          duration: 2000,
+          style: { backgroundColor: "green", color: "white" },
+        });
+        setEmail("");
+        setPassword("");
+      } else {
+        throw new Error(res.data.message || "Login failed");
+      }
+    } catch (err: any) {
+      console.error("Login error client:", err);
+      const errorMessage = err.response?.data?.message || err.message || "Login failed";
+      toast.error(errorMessage, {
+        position: "top-right",
+        duration: 2000,
+        style: { backgroundColor: "red", color: "white" },
+      });
+    }
+  };
+
+  return (
+    <div className="h-screen flex items-center justify-center bg-gradient-to-br from-background via-background to-muted/20">
+      <div className="w-full max-w-md">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h1 className="text-3xl font-bold text-foreground mb-3 font-dm-serif tracking-wide">
+            Welcome back
+          </h1>
+          <p className="text-muted-foreground text-sm">
+            Sign in to continue to your account
+          </p>
+        </div>
+
+        {/* Form Card */}
+        <div>
+          <form
+            className="space-y-6"
+            onSubmit={(e) => {
+              e.preventDefault();
+              ReqLogin();
+            }}
+          >
+            {/* Email Field */}
+            <div className="space-y-2">
               <Label
-                htmlFor="password"
+                htmlFor="email"
                 className="text-sm font-medium text-foreground"
               >
-                Password
+                Email address
               </Label>
-              <button
-                type="button"
-                className="text-xs text-primary hover:text-primary/80 font-medium"
-              >
-                Forgot password?
-              </button>
+              <Input
+                id="email"
+                type="email"
+                value={email}
+                onChange={emailHandler}
+                placeholder="Enter your email"
+                className="h-11 bg-background/50 border-border/60 focus:border-primary/60 focus:ring-primary/20"
+              />
             </div>
-            <Input
-              id="password"
-              type="password"
-              placeholder="Enter your password"
-              className="h-11 bg-background/50 border-border/60 focus:border-primary/60 focus:ring-primary/20"
-            />
-          </div>
 
-          {/* Remember Me */}
-          {/* <div className="flex items-center space-x-2">
+            {/* Password Field */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <Label
+                  htmlFor="password"
+                  className="text-sm font-medium text-foreground"
+                >
+                  Password
+                </Label>
+                <button
+                  type="button"
+                  className="text-xs text-primary hover:text-primary/80 font-medium"
+                >
+                  Forgot password?
+                </button>
+              </div>
+              <Input
+                id="password"
+                type="password"
+                value={password}
+                onChange={passwordHandler}
+                placeholder="Enter your password"
+                className="h-11 bg-background/50 border-border/60 focus:border-primary/60 focus:ring-primary/20"
+              />
+            </div>
+
+            {/* Remember Me */}
+            {/* <div className="flex items-center space-x-2">
             <input
               id="remember"
               type="checkbox"
@@ -74,17 +146,17 @@ const Login = () => (
             </Label>
           </div> */}
 
-          {/* Submit Button */}
-          <Button
-            type="submit"
-            className="w-full h-11 bg-primary hover:bg-primary/90 text-primary-foreground font-medium transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
-          >
-            Sign in
-          </Button>
-        </form>
+            {/* Submit Button */}
+            <Button
+              type="submit"
+              className="w-full h-11 bg-primary hover:bg-primary/90 text-primary-foreground font-medium transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+            >
+              Sign in
+            </Button>
+          </form>
 
-        {/* Divider */}
-        {/* <div className="flex items-center my-6">
+          {/* Divider */}
+          {/* <div className="flex items-center my-6">
           <div className="flex-1 border-t border-border/40"></div>
           <span className="px-4 text-xs text-muted-foreground bg-card">
             or continue with
@@ -92,8 +164,8 @@ const Login = () => (
           <div className="flex-1 border-t border-border/40"></div>
         </div> */}
 
-        {/* Social Login */}
-        {/* <div className="grid grid-cols-2 gap-3">
+          {/* Social Login */}
+          {/* <div className="grid grid-cols-2 gap-3">
           <Button
             variant="outline"
             type="button"
@@ -135,19 +207,20 @@ const Login = () => (
           </Button>
         </div> */}
 
-        {/* Sign Up Link */}
-        <p className="text-center text-sm text-muted-foreground mt-8">
-          Don&apos;t have an account?{" "}
-          <Link
-            href="/register"
-            className="text-primary hover:text-primary/80 font-medium"
-          >
-            Sign up for free
-          </Link>
-        </p>
+          {/* Sign Up Link */}
+          <p className="text-center text-sm text-muted-foreground mt-8">
+            Don&apos;t have an account?{" "}
+            <Link
+              href="/register"
+              className="text-primary hover:text-primary/80 font-medium"
+            >
+              Sign up for free
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default Login;

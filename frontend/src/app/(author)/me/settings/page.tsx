@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -25,6 +25,7 @@ import {
   Phone,
 } from "lucide-react";
 
+
 const Settings = () => {
   const [profileData, setProfileData] = useState({
     name: "John Doe",
@@ -34,6 +35,30 @@ const Settings = () => {
     website: "https://johndoe.dev",
     profilePicture: "/placeholder.svg?height=100&width=100&text=JD",
   });
+
+  useEffect(() => {
+    const getCookieValue = (key: string) => {
+      const value = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith(`${key}=`))
+        ?.split("=")[1];
+      if (value) {
+        try {
+          const decodedValue = decodeURIComponent(value);
+          setProfileData((prev) => ({
+            ...prev,
+            [key]: decodedValue,
+          }));
+        } catch (error) {
+          console.error('Error parsing cookie:', error);
+        }
+      }
+    };
+
+    getCookieValue("name");
+    getCookieValue("email");
+  }, []);
+  
 
   const [socialLinks, setSocialLinks] = useState({
     twitter: "https://twitter.com/johndoe",

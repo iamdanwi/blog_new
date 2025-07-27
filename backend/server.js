@@ -13,7 +13,13 @@ connectDB(); // ← You must call this to connect MongoDB
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors(
+    {
+        origin: "*",
+        methods: ["GET", "POST", "PUT", "DELETE"],
+        allowedHeaders: ["Content-Type", "Authorization"]
+    }
+));
 app.use(express.json());
 
 // Routes
@@ -25,7 +31,7 @@ app.get("/", (req, res) => {
     res.send("Backend is running properly");
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 app.listen(PORT, () => {
     console.log(`Server started on http://localhost:${PORT}`);

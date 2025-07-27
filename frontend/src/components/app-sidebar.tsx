@@ -1,5 +1,6 @@
-import { FilePenLine, Home, LogOut, Settings, Rss } from "lucide-react";
+"use client";
 
+import { FilePenLine, Home, LogOut, Settings, Rss } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -11,7 +12,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
-
+import axios from "axios";
 
 const items = [
   {
@@ -34,30 +35,49 @@ const items = [
     url: "/me/settings",
     icon: Settings,
   },
-
   {
     title: "Logout",
-    url: "#",
+    url: null,
     icon: LogOut,
   },
 ];
 
 export function AppSidebar() {
+  const handleLogout = async () => {
+    try {
+      const res = await axios.post("/api/auth/logout");
+      if (res.status === 200) {
+        window.location.href = "/login";
+      }
+    } catch (err) {
+      console.error("Logout failed:", err);
+    }
+  };
+
   return (
     <Sidebar collapsible="icon">
       <SidebarContent>
         <SidebarGroup className="space-y-7">
-          <SidebarGroupLabel className="font-dm-serif text-2xl">Blog.</SidebarGroupLabel>
+          <SidebarGroupLabel className="font-dm-serif text-2xl">
+            Blog.
+          </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu className="space-y-2">
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <Link href={item.url}>
+                  {item.title === "Logout" ? (
+                    <SidebarMenuButton onClick={handleLogout}>
                       <item.icon />
                       <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
+                    </SidebarMenuButton>
+                  ) : (
+                    <SidebarMenuButton asChild>
+                      <Link href={item.url!}>
+                        <item.icon />
+                        <span>{item.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  )}
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>
