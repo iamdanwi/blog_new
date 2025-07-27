@@ -2,14 +2,13 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 
-import connectDB from "./config/db.js"; // ← Missing in your original code
+import connectDB from "./config/db.js";
 import userRoutes from "./routes/user.routes.js";
 import blogRoutes from "./routes/blog.routes.js";
 import commentRoutes from "./routes/comment.routes.js";
 
 dotenv.config();
-connectDB(); // ← You must call this to connect MongoDB
-
+connectDB();
 const app = express();
 
 // Middleware
@@ -20,6 +19,7 @@ app.use(cors(
         allowedHeaders: ["Content-Type", "Authorization"]
     }
 ));
+
 app.use(express.json());
 
 // Routes

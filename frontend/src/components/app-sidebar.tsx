@@ -66,7 +66,10 @@ export function AppSidebar() {
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   {item.title === "Logout" ? (
-                    <SidebarMenuButton onClick={handleLogout}>
+                    <SidebarMenuButton
+                      onClick={handleLogout}
+                      className="text-red-600 hover:text-red-800 cursor-pointer"
+                    >
                       <item.icon />
                       <span>{item.title}</span>
                     </SidebarMenuButton>
